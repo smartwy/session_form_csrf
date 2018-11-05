@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>login page</title>
+</head>
+<body>
+{% if mes %}
+    {{ mes }}
+{% endif %}
+    <div>
+        <form action="/login/" method="post">
+            {% csrf_token %} {# form的post 的token获取，自动提交到后台  #}
+            <input id='user' type="text" name="user" placeholder="用户名">
+            <input id='pwd' type="password" name="pwd" placeholder="密码" >
+            <input type="checkbox" name="rmb" value="1"/> 10s免登陆
+            <input type="submit" value="登录" >
+            <input id='btn' type="button" value="Ajax1" >
+            <input id='btn2' type="button" value="Ajax2" >
+        </form>
+        <script src="/static/jquery-1.12.4.js"></script>
+        <script src="/static/jquery.cookie.js"></script>
+        <script>
+            $(function () {
+
+                function csrfSafeMethod(method) {
+                    // 如果是以下方法不加CSRFtoken
+                return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+                }
+
+                {# ajaxSetup:对全局的ajax进行csrftoken传输，不需要为每个ajax做headers #}
+                $.ajaxSetup({
+                    beforeSend:function (xhr, settings) {
+                         if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                             xhr.setRequestHeader('X-CSRFtoken', $.cookie('csrftoken'))
+                         }
+                    }
+                });
+
+                $('#btn').click(function () {
+                    $.ajax({
+                        url: '/login/',
+                        type: 'POST',
+                        data: {'Auser': $('#user').val(), 'Apwd': $('#pwd').val()},
+{#                        headers: {'X-CSRFtoken':$.cookie('csrftoken')}, {# 将token传到后端，使用ajaxSetup不需要单独传输 #}
+                        success: function (arg) {
+{#                            arg.reload();#}
+                        }
+                    });
+                });
+                $('#btn2').click(function () {
+                    $.ajax({
+                        url: '/login/',
+                        type: 'POST',
+                        data: {'Auser': $('#user').val(), 'Apwd': $('#pwd').val()},
+{#                        headers: {'X-CSRFtoken':$.cookie('csrftoken')}, {# 将token传到后端，使用ajaxSetup不需要单独传输 #}
+                        success: function (arg) {
+
+                        }
+                    });
+                });
+            });
+        </script>
+    </div>
+</body>
+</html>

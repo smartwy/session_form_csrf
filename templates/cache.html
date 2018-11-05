@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>cache test</title>
+    {% load cache %}
+</head>
+<body>
+
+    <h1>{{ time }}</h1>
+    <h1>局部(↓)缓存10秒</h1>
+    {% cache 10 k1 %} {# 缓存5秒 k1是缓存KEY #}
+    <h1>{{ time }}</h1>
+    {% endcache %}
+</body>
+</html>

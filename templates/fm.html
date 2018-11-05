@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form action="/fm/" method="post">
+          {% csrf_token %}
+        {# 第一种，自编html模板 #}
+{#            <p><input id='user' type="text" name="name" placeholder="用户名" value="{{ obj.cleaned_data.name }}"/>{{ obj.errors.name.0 }}</p>#}
+{#            <p><input id='pwd' type="password" name="pwd" placeholder="密码" />{{ obj.errors.pwd.0 }}</p>#}
+{#            <p><input id='phone' type="text" name="phone" placeholder="手机号" value="{{ obj.cleaned_data.phone }}"/>{{ obj.errors.phone.0 }}</p>#}
+{#            <p><input id='em' type="text" name="email" placeholder="邮箱"  value="{{ obj.cleaned_data.email }}" />{{ obj.errors.email.0 }}</p>#}
+{#            <select name="user_type">#}
+{#                <option value="0">普通用户</option>#}
+{#                <option value="1">超级用户</option>#}
+{#                <option value="2">私人用户</option>#}
+{#            </select>#}
+        {# 第二种，自动生成p标签模板 #}
+{#            {{ obj.as_p }}#}
+        {#        自动生成ul标签模板 #}
+{#            {{ obj.as_ul }}#}
+        {#        自动生成table标签模板 #}
+{#            <table>#}
+{#                  {{ obj.as_table }}#}
+{#            </table>#}
+        {# 第三种，半自动html模板#}
+            <p>{{ obj.name.label }}{{ obj.name }}{{ obj.errors.name.0 }}</p>
+            <p>{{ obj.pwd }}{{ obj.errors.pwd.0 }}</p>
+            <p>{{ obj.phone }}{{ obj.errors.phone.0 }}</p>
+            <p>{{ obj.email }}{{ obj.errors.email.0 }}</p>
+            <p>{{ obj.user_type }}{{ obj.errors.user_type.0 }}</p>
+
+            <p>{{ obj.f }}{{ obj.errors.f.0 }}</p>
+            <p>{{ obj.u_list }}{{ obj.errors.u_list.0 }}</p>
+            <p>{{ obj.ch }}{{ obj.errors.ch.0 }}</p>
+
+            <input type="submit" value="注册"/>
+    </form>
+</body>
+</html>
